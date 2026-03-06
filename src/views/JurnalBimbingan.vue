@@ -6,19 +6,19 @@ import {
   Calendar, PenLine, CheckCircle2, CircleDashed, Gift
 } from 'lucide-vue-next'
 
-// --- STATE JADWAL ---
+
 const jadwal = ref([])
 const isFormJadwalBuka = ref(false)
 const formJadwal = ref({ topik: '', tanggal: '', waktu: '', tipe: 'Tatap Muka', lokasi: '', status: 'pending' })
 
-// --- STATE CATATAN & REWARD ---
+
 const catatan = ref([])
 const judulCatatan = ref('')
 const isiCatatan = ref('')
-const rewardCatatan = ref('') // State baru untuk hadiah
+const rewardCatatan = ref('') 
 const tabCatatan = ref('revisi')
 
-// --- STATE KANBAN (UNTUK CEK STATUS REVISI) ---
+
 const dataKanban = ref([])
 
 const muatKanban = () => {
@@ -26,7 +26,7 @@ const muatKanban = () => {
   if (kanbanLokal) dataKanban.value = JSON.parse(kanbanLokal)
 }
 
-// --- LIFECYCLE & AUTO-SAVE ---
+
 onMounted(() => {
   const dataJadwal = localStorage.getItem('kawalSkripsi_jadwal')
   if (dataJadwal) jadwal.value = JSON.parse(dataJadwal)
@@ -52,7 +52,7 @@ watch(catatan, (val) => {
   window.dispatchEvent(new CustomEvent('kawalSkripsi_update'))
 }, { deep: true })
 
-// --- LOGIKA JADWAL ---
+
 const tambahJadwal = () => {
   if (!formJadwal.value.topik || !formJadwal.value.tanggal) return
   jadwal.value.push({ id: Date.now(), ...formJadwal.value, status: 'pending' })
@@ -87,16 +87,16 @@ const tambahKeGCal = (item) => {
   window.open(url, '_blank');
 }
 
-// --- LOGIKA CATATAN & INTEGRASI KANBAN ---
+
 const tambahCatatan = () => {
   if (!judulCatatan.value.trim() || !isiCatatan.value.trim()) return
   
-  // Simpan data dengan menyertakan reward
+ 
   catatan.value.unshift({
     id: Date.now(),
     judul: judulCatatan.value,
     isi: isiCatatan.value,
-    reward: tabCatatan.value === 'revisi' ? rewardCatatan.value : '', // Simpan reward khusus revisi
+    reward: tabCatatan.value === 'revisi' ? rewardCatatan.value : '', 
     tipe: tabCatatan.value,
     tanggal: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
   })
@@ -117,7 +117,7 @@ const tambahCatatan = () => {
     muatKanban() 
   }
 
-  // Reset Form
+
   judulCatatan.value = ''; 
   isiCatatan.value = '';
   rewardCatatan.value = '';

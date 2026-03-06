@@ -2,23 +2,23 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { LibraryBig, Plus, Trash2, ExternalLink, Search, BookText, Code2, Globe } from 'lucide-vue-next'
 
-// State Data
+
 const referensi = ref([])
 const kataKunci = ref('')
 const kategoriAktif = ref('Semua')
 
-// State Form Tambah
+
 const isFormBuka = ref(false)
 const form = ref({ judul: '', url: '', kategori: 'Jurnal' })
 
-// Definisi Kategori & Ikon (Disuntikkan kelas dark mode)
+
 const KATEGORI = [
   { nama: 'Jurnal', ikon: BookText, warna: 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800/50' },
   { nama: 'Repositori', ikon: Code2, warna: 'bg-slate-800 dark:bg-slate-700 text-white border-slate-700 dark:border-slate-600' },
   { nama: 'Artikel', ikon: Globe, warna: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800/50' }
 ]
 
-// Ambil data dari Local Storage
+
 onMounted(() => {
   const dataLokal = localStorage.getItem('kawalSkripsi_referensi')
   if (dataLokal) {
@@ -32,12 +32,11 @@ onMounted(() => {
   }
 })
 
-// Auto-save
+
 watch(referensi, (nilaiBaru) => {
   localStorage.setItem('kawalSkripsi_referensi', JSON.stringify(nilaiBaru))
 }, { deep: true })
 
-// Logika Tambah & Hapus
 const tambahReferensi = () => {
   if (!form.value.judul || !form.value.url) return
   
@@ -61,7 +60,7 @@ const hapusReferensi = (id) => {
   referensi.value = referensi.value.filter(item => item.id !== id)
 }
 
-// Fitur Filter & Search
+
 const referensiTampil = computed(() => {
   return referensi.value.filter(item => {
     const cocokKategori = kategoriAktif.value === 'Semua' || item.kategori === kategoriAktif.value

@@ -121,9 +121,9 @@ const levelSaatIni = computed(() => Math.floor(totalEXP.value / 200) + 1)
 const expProgress = computed(() => totalEXP.value - ((levelSaatIni.value - 1) * 200))
 const persentaseLevel = computed(() => Math.round((expProgress.value / 200) * 100))
 
-// --- LOGIKA SELF REWARDS (MENGGABUNGKAN KANBAN & REVISI) ---
+
 const selfRewards = computed(() => {
-  // 1. Ambil Reward dari Catatan Revisi
+
   const fromCatatan = dataCatatan.value
     .filter(c => c.tipe === 'revisi' && c.reward && c.reward.trim() !== '')
     .map(c => {
@@ -139,7 +139,7 @@ const selfRewards = computed(() => {
       }
     })
 
-  // 2. Ambil Reward dari Tugas Kanban (Abaikan yang judulnya dimulai dengan [Revisi] agar tidak duplikat)
+
   const fromKanban = dataKanban.value
     .filter(t => t.reward && t.reward.trim() !== '' && !t.judul.startsWith('[Revisi]'))
     .map(t => {

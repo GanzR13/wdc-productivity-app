@@ -11,7 +11,7 @@ const kolom = [
 const tugas = ref([])
 const isModalBuka = ref(false)
 const isEditing = ref(false)
-// Tambahkan 'reward' di state form
+
 const formTugas = ref({ id: null, judul: '', deskripsi: '', status: 'todo', reward: '' })
 
 let isUpdatingFromStorage = false 
@@ -23,7 +23,7 @@ const muatDataKanban = () => {
     tugas.value = JSON.parse(dataLokal)
     setTimeout(() => { isUpdatingFromStorage = false }, 100)
   } else {
-    // Dummy Data yang sudah disisipkan Reward!
+
     tugas.value = [
       { id: 1, judul: 'Bab 1: Pendahuluan', deskripsi: 'Latar belakang dan rumusan masalah.', status: 'done', reward: 'Nonton Netflix 1 Film' },
       { id: 2, judul: 'Bab 2: Tinjauan Pustaka', deskripsi: 'Mencari referensi jurnal 5 tahun terakhir.', status: 'progress', reward: 'Beli Kopi Susu Gula Aren' },
@@ -73,7 +73,7 @@ const bukaModalTambah = (statusAwal = 'todo') => {
 const bukaModalEdit = (item) => {
   isEditing.value = true
   formTugas.value = { ...item } 
-  // Handle jika ada data lama yang belum punya field reward
+
   if (formTugas.value.reward === undefined) formTugas.value.reward = ''
   isModalBuka.value = true
 }

@@ -24,7 +24,7 @@ onMounted(() => {
 
 watch(sesiSelesai, (nilaiBaru) => {
   localStorage.setItem('kawalSkripsi_sesi', nilaiBaru.toString())
-  // Memberitahu pantauprogres.vue bahwa ada update sesi!
+ 
   window.dispatchEvent(new CustomEvent('kawalSkripsi_update'))
 })
 
