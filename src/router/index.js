@@ -6,51 +6,52 @@ const router = createRouter({
     {
       path: '/',
       name: 'LandingPage',
-      component: () => import('@/views/LandingPage.vue'),
-      meta: { title: 'KawalSkripsi - Produktivitas Mahasiswa' }
+      component: () => import('../views/LandingPage.vue'),
+      meta: { title: 'KawalSkripsi - Mulai Lulus Tepat Waktu' }
+    },
+    {
+      path: '/progres',
+      name: 'PantauProgres',
+      component: () => import('../views/PantauProgres.vue'),
+      meta: { title: 'Grafik Capaian - KawalSkripsi' }
     },
     {
       path: '/jurnal',
       name: 'JurnalBimbingan',
-      component: () => import('@/views/JurnalBimbingan.vue'),
+      component: () => import('../views/JurnalBimbingan.vue'),
       meta: { title: 'Catatan Revisi - KawalSkripsi' }
     },
     {
       path: '/kanban',
       name: 'PapanKanban',
-      component: () => import('@/views/PapanKanban.vue'),
+      component: () => import('../views/PapanKanban.vue'),
       meta: { title: 'Papan Progres - KawalSkripsi' }
     },
     {
       path: '/fokus',
       name: 'FokusPomodoro',
-      component: () => import('@/views/FokusPomodoro.vue'),
+      component: () => import('../views/FokusPomodoro.vue'),
       meta: { title: 'Waktu Fokus - KawalSkripsi' }
     },
     {
       path: '/referensi',
       name: 'PusatReferensi',
-      component: () => import('@/views/PusatReferensi.vue'),
+      component: () => import('../views/PusatReferensi.vue'),
       meta: { title: 'Pusat Referensi - KawalSkripsi' }
     },
     {
-      path: '/progres',
-      name: 'PantauProgres',
-      component: () => import('@/views/PantauProgres.vue'),
-      meta: { title: 'Grafik Capaian - KawalSkripsi' }
-    },
-    {
+      // Wajib berada di paling bawah!
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
-      component: () => import('@/views/NotFound.vue'),
+      component: () => import('../views/NotFound.vue'),
       meta: { title: 'Halaman Tidak Ditemukan - KawalSkripsi' }
-    },
+    }
   ]
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
   document.title = to.meta.title || 'KawalSkripsi - Produktivitas Mahasiswa'
-  next()
+  return true 
 })
 
 export default router
