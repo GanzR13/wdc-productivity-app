@@ -51,19 +51,46 @@ const muatKanban = () => {
 	if (kanbanLokal) dataKanban.value = JSON.parse(kanbanLokal);
 };
 
+let intervalCekStatus = null;
+
+const cekStatusJadwalOtomatis = () => {
+  const waktuSekarang = new Date();
+  let adaPerubahan = false;
+
+  jadwal.value.forEach((item) => {
+    if (item.status !== "selesai") {
+      
+      const waktuJadwalStr = item.waktu ? `${item.tanggal}T${item.waktu}:00` : `${item.tanggal}T23:59:59`;
+      const waktuJadwal = new Date(waktuJadwalStr);
+
+      if (waktuJadwal < waktuSekarang) {
+        item.status = "selesai";
+        adaPerubahan = true;
+      }
+    }
+  });
+
+  if (adaPerubahan) {
+    window.dispatchEvent(new CustomEvent("kawalSkripsi_update"));
+  }
+};
+
 onMounted(() => {
-	const dataJadwal = localStorage.getItem("kawalSkripsi_jadwal");
-	if (dataJadwal) jadwal.value = JSON.parse(dataJadwal);
+  const dataJadwal = localStorage.getItem("kawalSkripsi_jadwal");
+  if (dataJadwal) jadwal.value = JSON.parse(dataJadwal);
 
-	const dataCatatan = localStorage.getItem("kawalSkripsi_catatan");
-	if (dataCatatan) catatan.value = JSON.parse(dataCatatan);
+  const dataCatatan = localStorage.getItem("kawalSkripsi_catatan");
+  if (dataCatatan) catatan.value = JSON.parse(dataCatatan);
 
-	muatKanban();
-	window.addEventListener("kawalSkripsi_update", muatKanban);
+  muatKanban();
+  window.addEventListener("kawalSkripsi_update", muatKanban);
+  
+  intervalCekStatus = setInterval(cekStatusJadwalOtomatis, 60000);
 });
 
 onUnmounted(() => {
-	window.removeEventListener("kawalSkripsi_update", muatKanban);
+  window.removeEventListener("kawalSkripsi_update", muatKanban);
+  if (intervalCekStatus) clearInterval(intervalCekStatus);
 });
 
 watch(
