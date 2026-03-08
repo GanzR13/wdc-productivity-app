@@ -3,9 +3,6 @@ import { ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { Menu, Sun, Moon, GraduationCap, Sparkles } from 'lucide-vue-next'
 import Sidebar from '@/components/Sidebar.vue'
-import LandingPage from '@/views/LandingPage.vue'
-
-
 import { isDark, initTheme, toggleTheme } from '@/composables/useTheme.js'
 
 initTheme() 
@@ -103,6 +100,8 @@ const masukKeDashboard = () => {
         <div class="fixed inset-y-0 left-0 z-50 transform md:relative md:translate-x-0 transition-transform duration-300 ease-in-out" :class="isMobileMenuBuka ? 'translate-x-0' : '-translate-x-full'">
           <Sidebar />
         </div>
+
+        <Sidebar v-if="$route.path !== '/'" />
 
         <main class="flex-1 h-screen overflow-y-auto w-full relative">
           <header class="md:hidden bg-white dark:bg-slate-800 shadow-sm h-16 flex items-center justify-between px-4 sticky top-0 z-30 transition-colors duration-300">

@@ -1,4 +1,5 @@
 <script setup>
+
 import {
   ArrowRight, Brain, KanbanSquare, Gift,
   Sparkles, Zap, ChevronRight, CheckCircle2, Timer,

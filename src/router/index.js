@@ -4,15 +4,14 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      // Redirect otomatis ke fitur wajib saat pertama kali dibuka
       path: '/',
-      name: 'home',
-      redirect: '/jurnal' 
+      name: 'LandingPage',
+      component: () => import('@/views/LandingPage.vue'),
+      meta: { title: 'KawalSkripsi - Produktivitas Mahasiswa' }
     },
     {
       path: '/jurnal',
       name: 'JurnalBimbingan',
-      // Menggunakan Lazy Loading agar website lebih cepat dimuat
       component: () => import('@/views/JurnalBimbingan.vue'),
       meta: { title: 'Catatan Revisi - KawalSkripsi' }
     },
@@ -40,17 +39,15 @@ const router = createRouter({
       component: () => import('@/views/PantauProgres.vue'),
       meta: { title: 'Grafik Capaian - KawalSkripsi' }
     },
-    // Halaman 404 (Opsional, tapi bagus untuk penilaian UI/UX)
     {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
       component: () => import('@/views/NotFound.vue'),
       meta: { title: 'Halaman Tidak Ditemukan - KawalSkripsi' }
-    }
+    },
   ]
 })
 
-// Navigation Guard: Mengubah title tab browser secara dinamis
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title || 'KawalSkripsi - Produktivitas Mahasiswa'
   next()
